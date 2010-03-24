@@ -11,9 +11,9 @@
 
 include rules.mk
 
-SPANDSP_SITE=http://www.soft-switch.org/downloads/spandsp/old
+SPANDSP_SITE=http://www.soft-switch.org/downloads/spandsp/
 SPANDSP_VERSION=0.0.4
-SPANDSP_SOURCE=spandsp-0.0.4pre16.tgz
+SPANDSP_SOURCE=spandsp-0.0.4pre18.tgz
 TIFF_VERSION=3.8.2
 SPANDSP_DIR=$(BUILD_DIR)/spandsp-$(SPANDSP_VERSION)
 SPANDSP_CONFIGURE_OPTS=--host=bfin-linux-uclibc --enable-fixed-point
@@ -41,6 +41,7 @@ $(SPANDSP_DIR)/.configured: $(SPANDSP_DIR)/.unpacked
 	cp -v -f $(BUILD_DIR)/patch/config.sub-spandsp-$(SPANDSP_VERSION) $(SPANDSP_DIR)/config/config.sub
 	cp -v -f $(BUILD_DIR)/patch/configure-spandsp-$(SPANDSP_VERSION) $(SPANDSP_DIR)/configure
 	chmod a+x $(SPANDSP_DIR)/configure
+	export ac_cv_func_malloc_0_nonnull=yes
 	cd $(SPANDSP_DIR); LDFLAGS=$(TIFF_LDFLAGS) CFLAGS=$(TIFF_CFLAGS) ./configure $(SPANDSP_CONFIGURE_OPTS)
 	touch $(SPANDSP_DIR)/.configured
 

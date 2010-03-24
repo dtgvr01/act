@@ -3,7 +3,7 @@
 
 include rules.mk
 
-ASTERISK_VERSION=1.4.21.2
+ASTERISK_VERSION=1.4.23
 ASTERISK_NAME=asterisk-$(ASTERISK_VERSION)
 ASTERISK_DIR=$(BUILD_DIR)/$(ASTERISK_NAME)
 ASTERISK_SOURCE=$(ASTERISK_NAME).tar.gz
@@ -20,11 +20,9 @@ SPANDSP_INC:=$(TOPDIR)/spandsp-0.0.4/src
 STAGING_INC=$(STAGING_DIR)/usr/include
 STAGING_LIB=$(STAGING_DIR)/usr/lib
 ASTERISK_CFLAGS=-g -mfdpic -mfast-fp -ffast-math -D__FIXED_PT__ \
--D__BLACKFIN__ -I$(STAGING_INC) -I$(LIBTIFF_INC) -I$(SPANDSP_INC) -fno-jump-tables 
-#\
-#-DUSE_SPANDSP_CALLERID -DUSE_UWB_EXTENSIONS
-ASTERISK_LDFLAGS=-mfdpic -L$(STAGING_LIB) -lpthread -ldl -ltonezone 
-#-lspandsp -ltiff
+-D__BLACKFIN__ -I$(STAGING_INC) -I$(LIBTIFF_INC) -I$(SPANDSP_INC) -fno-jump-tables \
+-DUSE_SPANDSP_CALLERID -DUSE_UWB_EXTENSIONS
+ASTERISK_LDFLAGS=-mfdpic -L$(STAGING_LIB) -lpthread -ldl -ltonezone -lspandsp -ltiff
 ASTERISK_CONFIGURE_OPTS=--host=bfin-linux-uclibc --disable-largefile \
 --without-pwlib --without-curl CFLAGS="$(ASTERISK_CFLAGS)" \
 LDFLAGS="$(ASTERISK_LDFLAGS)"

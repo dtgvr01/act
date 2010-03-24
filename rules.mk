@@ -19,7 +19,7 @@ PACKAGE_DIR=$(TOPDIR)/ipkg
 PKG_BUILD_DIR=$(TOPDIR)/ipkg
 IPKG_STATE_DIR:=$(TOPDIR)/root/usr/lib/ipkg
 SCRIPT_DIR=$(TOPDIR)/scripts
-TOOLCHAIN_PATH=$(TOPDIR)/opt/uClinux/bfin-linux-uclibc/bin:$(TOPDIR)/opt/uClinux/bfin-uclinux/bin
+TOOLCHAIN_PATH=/opt/uClinux/bfin-linux-uclibc/bin:/opt/uClinux/bfin-uclinux/bin
 
 ARCH=bfin
 export PATH:= $(TOOLCHAIN_PATH):$(PATH):scripts:scripts/ipkg-utils:include

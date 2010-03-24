@@ -14,7 +14,7 @@
 #
 
 VENDOR=Rowetel
-PRODUCT=IP08
+PRODUCT=IP01
 
 include rules.mk
 
@@ -263,4 +263,6 @@ endef
 $(eval $(call BuildPackage,uclinux))
 
 uClinux-package: uClinux $(PACKAGE_DIR)/uclinux_$(VERSION)_$(PKGARCH).ipk
+	rcp -r /home/dan/dev/uClinux-dist/root/lib/modules/2.6.22.19-ADI-2008R1.5/kernel/drivers/dahdi root@192.168.1.80:/lib/modules/2.6.22.19-ADI-2008R1.5/kernel/drivers
+	
 
