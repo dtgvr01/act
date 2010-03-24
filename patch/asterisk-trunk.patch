@@ -1,0 +1,116 @@
+--- asterisk-trunk-orig/main/config.c	2008-01-26 22:54:52.000000000 -0700
++++ asterisk-trunk/main/config.c	2008-01-26 21:44:11.000000000 -0700
+@@ -49,7 +49,7 @@
+ 
+ #include <glob.h>
+ 
+-#ifdef SOLARIS
++#if defined(SOLARIS) || defined(__BLACKFIN__)
+ #define MY_GLOB_FLAGS	GLOB_NOCHECK
+ #else
+ #define MY_GLOB_FLAGS	(GLOB_NOMAGIC|GLOB_BRACE)
+--- asterisk-trunk-orig/main/manager.c	2008-01-26 22:54:52.000000000 -0700
++++ asterisk-trunk/main/manager.c	2008-01-26 21:44:11.000000000 -0700
+@@ -2378,7 +2378,7 @@
+ 	const char *module = astman_get_header(m, "Module");
+ 	const char *id = astman_get_header(m,"ActionID");
+ 	char idText[BUFSIZ];
+-	const char *version;
++	char *version = NULL;
+ 	char filename[BUFSIZ/2];
+ 	char *cut;
+ 
+@@ -2397,8 +2397,9 @@
+ 	}
+ 	sprintf(cut, ".c");
+ 	ast_log(LOG_DEBUG, "**** ModuleCheck .c file %s\n", filename);
++#if !defined(LOW_MEMORY)
+ 	version = ast_file_version_find(filename);
+-
++#endif
+ 	if (!ast_strlen_zero(id))
+ 		snprintf(idText, sizeof(idText), "ActionID: %s\r\n", id);
+ 	astman_append(s, "Response: Success\r\n%s", idText);
+--- asterisk-trunk-orig/res/ael/ael.flex	2008-01-26 22:54:56.000000000 -0700
++++ asterisk-trunk/res/ael/ael.flex	2008-01-26 21:44:11.000000000 -0700
+@@ -418,7 +418,7 @@
+ 		   snprintf(fnamebuf2,sizeof(fnamebuf2), "%s/%s", (char *)ast_config_AST_CONFIG_DIR, fnamebuf);
+ 		   ast_copy_string(fnamebuf,fnamebuf2,sizeof(fnamebuf));
+ 		}
+-#ifdef SOLARIS
++#if defined(SOLARIS) || defined (__BLACKFIN__) 
+ 			glob_ret = glob(fnamebuf, GLOB_NOCHECK, NULL, &globbuf);
+ #else
+ 			glob_ret = glob(fnamebuf, GLOB_NOMAGIC|GLOB_BRACE, NULL, &globbuf);
+--- asterisk-trunk-orig/res/ael/ael_lex.c	2008-01-26 22:54:56.000000000 -0700
++++ asterisk-trunk/res/ael/ael_lex.c	2008-01-26 21:44:11.000000000 -0700
+@@ -1713,7 +1713,7 @@
+ 		   snprintf(fnamebuf2,sizeof(fnamebuf2), "%s/%s", (char *)ast_config_AST_CONFIG_DIR, fnamebuf);
+ 		   ast_copy_string(fnamebuf,fnamebuf2,sizeof(fnamebuf));
+ 		}
+-#ifdef SOLARIS
++#if defined(SOLARIS) || defined(__BLACKFIN__)
+ 			glob_ret = glob(fnamebuf, GLOB_NOCHECK, NULL, &globbuf);
+ #else
+ 			glob_ret = glob(fnamebuf, GLOB_NOMAGIC|GLOB_BRACE, NULL, &globbuf);
+--- asterisk-trunk-orig/utils/Makefile	2008-01-26 22:55:01.000000000 -0700
++++ asterisk-trunk/utils/Makefile	2008-01-26 21:44:11.000000000 -0700
+@@ -17,7 +17,7 @@
+ .PHONY: clean all uninstall
+ 
+ # to get check_expr, add it to the ALL_UTILS list
+-ALL_UTILS:=astman smsq stereorize streamplayer aelparse muted check_expr conf2ael hashtest2 hashtest astcanary
++ALL_UTILS:=astman smsq stereorize streamplayer aelparse conf2ael astcanary
+ UTILS:=$(ALL_UTILS)
+ 
+ LIBS += $(BKTR_LIB)	# astobj2 with devmode uses backtrace
+--- asterisk-trunk-orig/main/acl.c	2008-01-26 22:54:52.000000000 -0700
++++ asterisk-trunk/main/acl.c	2008-01-26 22:49:28.000000000 -0700
+@@ -34,7 +34,9 @@
+ #include <net/route.h>
+ #endif
+ 
+-#if defined(SOLARIS)
++#if defined(__BLACKFIN__)
++#include <net/if.h>
++#elif defined(SOLARIS)
+ #include <sys/sockio.h>
+ #include <net/if.h>
+ #else
+@@ -47,6 +49,7 @@
+ #include "asterisk/lock.h"
+ #include "asterisk/srv.h"
+ 
++#if !defined(__BLACKFIN__)
+ static void score_address(const struct sockaddr_in *sin, struct in_addr *best_addr, int *best_score)
+ {
+ 	const char *address;
+@@ -150,7 +153,7 @@
+ #endif /* BSD_OR_LINUX */
+ 
+ 		/* There is no reason whatsoever that this shouldn't work on Linux or BSD also. */
+-#ifdef SOLARIS
++#ifdef SOLARIS 
+ 		/* Get a count of interfaces on the machine */
+ 		ifn.lifn_family = AF_INET;
+ 		ifn.lifn_flags = 0;
+@@ -200,6 +203,7 @@
+ 		memcpy(ourip, &best_addr, sizeof(*ourip));
+ 	return res;
+ }
++#endif /* __BLACKFIN__ */
+ /* Free HA structure */
+ void ast_free_ha(struct ast_ha *ha)
+ {
+@@ -512,6 +516,11 @@
+ 	/* A.ROOT-SERVERS.NET. */
+ 	if (inet_aton("198.41.0.4", &saddr) && !ast_ouraddrfor(&saddr, ourip))
+ 		return 0;
++#if defined(__BLACKFIN__)
++	return (-1);
++#else
+ 	return get_local_address(ourip);
++#endif /* __BLACKFIN__ */
++
+ }
+ 

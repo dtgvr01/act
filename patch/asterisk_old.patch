@@ -1,0 +1,233 @@
+--- asterisk-1.4.21.2-orig/utils/Makefile	2008-03-11 07:04:29.000000000 -0400
++++ asterisk-1.4.21.2/utils/Makefile	2009-10-08 20:54:19.000000000 -0400
+@@ -16,7 +16,7 @@
+ .PHONY: clean all uninstall
+ 
+ # to get check_expr, add it to the ALL_UTILS list
+-ALL_UTILS:=astman smsq stereorize streamplayer aelparse muted
++ALL_UTILS:=astman smsq stereorize streamplayer aelparse
+ UTILS:=$(ALL_UTILS)
+ 
+ include $(ASTTOPDIR)/Makefile.rules
+--- asterisk-1.4.21.2-orig/main/config.c	2008-06-03 18:15:33.000000000 -0400
++++ asterisk-1.4.21.2/main/config.c	2009-10-08 20:54:19.000000000 -0400
+@@ -37,7 +37,6 @@
+ #include <errno.h>
+ #include <time.h>
+ #include <sys/stat.h>
+-#define AST_INCLUDE_GLOB 1
+ #ifdef AST_INCLUDE_GLOB
+ #if defined(__Darwin__) || defined(__CYGWIN__)
+ #define GLOB_ABORTED GLOB_ABEND
+--- asterisk-1.4.21.2-orig/configure	2008-05-09 12:34:08.000000000 -0400
++++ asterisk-1.4.21.2/configure	2009-10-08 20:54:19.000000000 -0400
+@@ -11897,7 +11897,7 @@
+ fi
+ if test "x$ac_cv_func_fork_works" = xcross; then
+   case $host in
+-    *-*-amigaos* | *-*-msdosdjgpp* | *-*-uclinux* | *-*-linux-uclibc* )
++    *-*-amigaos* | *-*-msdosdjgpp* | *-*-uclinux* | *-*-linux-uclibc* | bfin-*-* )
+       # Override, as these systems have only a dummy fork() stub
+       ac_cv_func_fork_works=no
+       ;;
+--- asterisk-1.4.21.2-orig/main/frame.c	2008-04-17 12:50:46.000000000 -0400
++++ asterisk-1.4.21.2/main/frame.c	2009-10-08 23:34:06.000000000 -0400
+@@ -115,7 +115,7 @@
+ 	{ 1, AST_FORMAT_SLINEAR, "slin", "16 bit Signed Linear PCM", 160, 10, 70, 10, 20, AST_SMOOTHER_FLAG_BE },	/*!< 7 */
+ 	{ 1, AST_FORMAT_LPC10, "lpc10", "LPC10", 7, 20, 20, 20, 20 },		/*!<  8: codec_lpc10.c */ 
+ 	{ 1, AST_FORMAT_G729A, "g729", "G.729A", 10, 10, 230, 10, 20, AST_SMOOTHER_FLAG_G729 },	/*!<  9: Binary commercial distribution */
+-	{ 1, AST_FORMAT_SPEEX, "speex", "SpeeX", 10, 10, 60, 10, 20 },		/*!< 10: codec_speex.c */
++	{ 1, AST_FORMAT_SPEEX, "speex", "SpeeX", 38, 20, 300, 20, 20 },		/*!< 10: codec_speex.c */
+ 	{ 1, AST_FORMAT_ILBC, "ilbc", "iLBC", 50, 30, 30, 30, 30 },		/*!< 11: codec_ilbc.c */ /* inc=30ms - workaround */
+ 	{ 1, AST_FORMAT_G726_AAL2, "g726aal2", "G.726 AAL2", 40, 10, 300, 10, 20 },	/*!<  12: codec_g726.c */
+ 	{ 1, AST_FORMAT_G722, "g722", "G722"},					/*!< 13 */
+@@ -1498,7 +1498,9 @@
+ 	int samples=0;
+ 	switch(f->subclass) {
+ 	case AST_FORMAT_SPEEX:
+-		samples = speex_samples(f->data, f->datalen);
++		/* DR: hard coded for quality=8 mode.  
++		   300 bits (38 bytes) converted to 160 samples */
++		samples = 160 * (f->datalen / 38);
+ 		break;
+ 	case AST_FORMAT_G723_1:
+                 samples = g723_samples(f->data, f->datalen);
+@@ -1526,6 +1528,10 @@
+ 		break;
+ 	case AST_FORMAT_G722:
+ 	case AST_FORMAT_ADPCM:
++#ifdef USE_UWB_EXTENSIONS
++		samples = f->datalen;
++		break;
++#endif
+ 	case AST_FORMAT_G726:
+ 	case AST_FORMAT_G726_AAL2:
+ 		samples = f->datalen * 2;
+@@ -1559,7 +1565,12 @@
+ 		len = samples;
+ 		break;
+ 	case AST_FORMAT_G722:
++
+ 	case AST_FORMAT_ADPCM:
++#ifdef USE_UWB_EXTENSIONS
++		len = samples;
++		break;
++#endif
+ 	case AST_FORMAT_G726:
+ 	case AST_FORMAT_G726_AAL2:
+ 		len = samples / 2;
+--- asterisk-1.4.21.2-orig/main/callerid.c	2008-04-18 13:44:29.000000000 -0400
++++ asterisk-1.4.21.2/main/callerid.c	2009-10-08 20:54:20.000000000 -0400
+@@ -45,7 +45,31 @@
+ #include "asterisk/options.h"
+ #include "asterisk/utils.h"
+ 
++#ifdef USE_SPANDSP_CALLERID
++#include <inttypes.h>
++#include <assert.h>
++#include "spandsp/telephony.h"
++#include "spandsp/logging.h"
++#include "spandsp/complex.h"
++#include "spandsp/dds.h"
++#include "spandsp/power_meter.h"
++#include "spandsp/async.h"
++#include "spandsp/crc.h"
++#include "spandsp/fsk.h"
++#include "spandsp/tone_detect.h"
++#include "spandsp/tone_generate.h"
++#include "spandsp/super_tone_rx.h"
++#include "spandsp/queue.h"
++#include "spandsp/dtmf.h"
++#include "spandsp/adsi.h"
++#endif
++
+ struct callerid_state {
++#ifdef USE_SPANDSP_CALLERID	
++	adsi_rx_state_t adsi;
++	char adsi_output[256];
++	int  adsi_len;
++#endif 
+ 	fsk_data fskd;
+ 	char rawdata[256];
+ 	short oldstuff[160];
+@@ -61,6 +85,7 @@
+ 
+ 	int skipflag; 
+ 	unsigned short crc;
++	FILE* fpdebug;
+ };
+ 
+ 
+@@ -77,6 +102,29 @@
+ 
+ #define AST_CALLERID_UNKNOWN	"<unknown>"
+ 
++#ifdef USE_SPANDSP_CALLERID	
++void cid_put_msg_func_t(void *user_data, const uint8_t *msg, int len)
++{
++	/*given the nature of calling adsi_rx for each sample, we'll always
++	* only have one byte at a time here */
++	struct callerid_state *cid = (struct callerid_state *)user_data;
++	cid->adsi_len = len;
++	memcpy(cid->adsi_output,msg,len > sizeof(cid->adsi_output) ? sizeof(cid->adsi_output) : len);
++}
++
++int fsk_serie_spandsp(struct callerid_state *cid, short *buffer, int *len)
++{
++
++	cid->adsi_len = 0;
++	adsi_rx(&cid->adsi,buffer,*len);
++	*len = 0;
++	if (cid->adsi_len >= 0) {
++		return 1;
++	}
++	return 0;
++}
++#endif
++
+ static inline void gen_tones(unsigned char *buf, int len, int codec, float ddr1, float ddi1, float ddr2, float ddi2, float *cr1, float *ci1, float *cr2, float *ci2)
+ {
+ 	int x;
+@@ -134,6 +182,12 @@
+ 	struct callerid_state *cid;
+ 
+ 	if ((cid = ast_calloc(1, sizeof(*cid)))) {
++		#ifdef USE_SPANDSP_CALLERID
++		adsi_rx_init(&cid->adsi, 
++				(cid_signalling == 2) ? ADSI_STANDARD_CLIP : ADSI_STANDARD_CLASS, 
++				cid_put_msg_func_t,
++				cid);
++#endif
+ 		cid->fskd.spb = 7.0;          	/* 1200 baud */
+ 		/* cid->fskd.hdlc = 0; */     	/* Async */
+ 		cid->fskd.nbit = 8;           	/* 8 bits */
+@@ -559,7 +613,11 @@
+ 		buf[x+cid->oldlen/2] = AST_XLAW(ubuf[x]);
+ 	while(mylen >= 160) {
+ 		olen = mylen;
++#ifdef USE_SPANDSP_CALLERID
++		res = fsk_serie_spandsp(cid, buf, &mylen);
++#else
+ 		res = fsk_serie(&cid->fskd, buf, &mylen, &b);
++#endif
+ 		if (mylen < 0) {
+ 			ast_log(LOG_ERROR, "No start bit found in fsk data.\n");
+ 			free(obuf);
+@@ -572,6 +630,13 @@
+ 			return -1;
+ 		}
+ 		if (res == 1) {
++#ifdef USE_SPANDSP_CALLERID
++			int index;
++			cid->sawflag = 2;
++			for (index = 0;index < cid->adsi_len;index++)
++			{
++				b = cid->adsi_output[index] & 0x00ff;
++#endif
+ 			/* Ignore invalid bytes */
+ 			if (b > 0xff)
+ 				continue;
+@@ -606,6 +671,7 @@
+ 				if (!cid->len) {
+ 					cid->rawdata[cid->pos] = '\0';
+ 					cid->sawflag = 5;
++#ifndef USE_SPANDSP_CALLERID
+ 				}
+ 				break;
+ 			case 5: /* Check checksum */
+@@ -615,6 +681,7 @@
+ 					cid->sawflag = 0;
+ 					break;
+ 				}
++#endif
+ 		
+ 				cid->number[0] = '\0';
+ 				cid->name[0] = '\0';
+@@ -692,10 +759,16 @@
+ 				}
+ 				free(obuf);
+ 				return 1;
++#ifdef USE_SPANDSP_CALLERID	
++				}
++#endif
+ 				break;
+ 			default:
+ 				ast_log(LOG_ERROR, "Dunno what to do with a digit in sawflag %d\n", cid->sawflag);
+ 			}
++#ifdef USE_SPANDSP_CALLERID	
++		} /*for*/
++#endif
+ 		}
+ 	}
+ 	if (mylen) {
+--- asterisk-1.4.21.2-orig/res/res_agi.c	2008-05-14 17:38:09.000000000 -0400
++++ asterisk-1.4.21.2/res/res_agi.c	2009-10-08 20:54:20.000000000 -0400
+@@ -291,7 +291,7 @@
+ 	/* Block SIGHUP during the fork - prevents a race */
+ 	sigfillset(&signal_set);
+ 	pthread_sigmask(SIG_BLOCK, &signal_set, &old_set);
+-	pid = fork();
++	pid = vfork();
+ 	if (pid < 0) {
+ 		ast_log(LOG_WARNING, "Failed to fork(): %s\n", strerror(errno));
+ 		pthread_sigmask(SIG_SETMASK, &old_set, NULL);

@@ -1,0 +1,52 @@
+--- asterisk-1.6.1.6-orig/res/ael/ael_lex.c	2009-06-18 12:51:54.000000000 -0400
++++ asterisk-1.6.1.6/res/ael/ael_lex.c	2009-10-21 22:26:34.000000000 -0400
+@@ -1962,7 +1962,7 @@
+ 		   snprintf(fnamebuf2,sizeof(fnamebuf2), "%s/%s", (char *)ast_config_AST_CONFIG_DIR, fnamebuf);
+ 		   ast_copy_string(fnamebuf,fnamebuf2,sizeof(fnamebuf));
+ 		}
+-#ifdef SOLARIS
++#if defined(SOLARIS) || defined(__BLACKFIN__)
+ 			glob_ret = glob(fnamebuf, GLOB_NOCHECK, NULL, &globbuf);
+ #else
+ 			glob_ret = glob(fnamebuf, GLOB_NOMAGIC|GLOB_BRACE, NULL, &globbuf);
+--- asterisk-1.6.1.6-orig/main/app.c	2009-08-06 17:33:58.000000000 -0400
++++ asterisk-1.6.1.6/main/app.c	2009-10-21 22:40:13.000000000 -0400
+@@ -1919,7 +1919,11 @@
+ 	sigfillset(&signal_set);
+ 	pthread_sigmask(SIG_BLOCK, &signal_set, &old_set);
+ 
++#ifdef HAVE_WORKING_FORK
+ 	pid = fork();
++#else
++	pid = vfork();
++#endif
+ 
+ 	if (pid != 0) {
+ 		/* Fork failed or parent */
+--- asterisk-1.6.1.6-orig/main/asterisk.c	2009-08-10 15:30:55.000000000 -0400
++++ asterisk-1.6.1.6/main/asterisk.c	2009-10-21 22:39:34.000000000 -0400
+@@ -3338,8 +3338,12 @@
+ 
+ 		/* Don't let the canary child kill Asterisk, if it dies immediately */
+ 		signal(SIGPIPE, SIG_IGN);
+-
++#ifdef HAVE_WORKING_FORK
+ 		canary_pid = fork();
++#else
++		canary_pid = vfork();
++#endif
++
+ 		if (canary_pid == 0) {
+ 			char canary_binary[128], *lastslash;
+ 
+--- asterisk-1.6.1.6-orig/main/editline/TEST/test.c	2006-08-20 22:11:39.000000000 -0400
++++ asterisk-1.6.1.6/main/editline/TEST/test.c	2009-10-21 22:40:09.000000000 -0400
+@@ -237,7 +237,7 @@
+ 				break;
+ 			}
+ 		} else if (el_parse(el, ac, av) == -1) {
+-			switch (fork()) {
++			switch (vfork()) {
+ 			case 0:
+ 				execvp(av[0], (char *const *)av);
+ 				perror(av[0]);

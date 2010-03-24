@@ -1,0 +1,17 @@
+--- zaptel-1.4.3-orig/Makefile	2007-06-09 01:07:44.000000000 +0930
++++ zaptel-1.4.3/Makefile	2007-11-18 10:31:45.000000000 +1030
+@@ -98,11 +98,11 @@
+   BUILD_XPP:=yes
+ endif
+ 
+-TOPDIR_MODULES:=pciradio tor2 torisa wcfxo wct1xxp wctdm wctdm24xxp wcte11xp wcusb zaptel ztd-eth ztd-loc ztdummy ztdynamic zttranscode wcte12xp
+-SUBDIR_MODULES:=wct4xxp wctc4xxp xpp
++TOPDIR_MODULES:=zaptel bfsi wcfxs
++SUBDIR_MODULES:=
+ BUILD_TOPDIR_MODULES:=$(filter-out $(MENUSELECT_MODULES),$(TOPDIR_MODULES))
+ BUILD_SUBDIR_MODULES:=$(filter-out $(MENUSELECT_MODULES),$(SUBDIR_MODULES))
+-BUILD_MODULES:=$(BUILD_TOPDIR_MODULES) $(BUILD_SUBDIR_MODULES)
++BUILD_MODULES:=$(BUILD_TOPDIR_MODULES) 
+ 
+ MOD_DESTDIR:=zaptel
+ 

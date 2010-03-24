@@ -1,0 +1,74 @@
+--- asterisk-1.6.2.6-orig/res/ael/ael_lex.c	2009-06-18 12:51:54.000000000 -0400
++++ asterisk-1.6.2.6/res/ael/ael_lex.c	2009-10-21 22:26:34.000000000 -0400
+@@ -1962,7 +1962,7 @@
+ 		   snprintf(fnamebuf2,sizeof(fnamebuf2), "%s/%s", (char *)ast_config_AST_CONFIG_DIR, fnamebuf);
+ 		   ast_copy_string(fnamebuf,fnamebuf2,sizeof(fnamebuf));
+ 		}
+-#ifdef SOLARIS
++#if defined(SOLARIS) || defined(__BLACKFIN__)
+ 			glob_ret = glob(fnamebuf, GLOB_NOCHECK, NULL, &globbuf);
+ #else
+ 			glob_ret = glob(fnamebuf, GLOB_NOMAGIC|GLOB_BRACE, NULL, &globbuf);
+--- asterisk-1.6.2.6-orig/main/app.c	2009-08-06 17:33:58.000000000 -0400
++++ asterisk-1.6.2.6/main/app.c	2009-10-21 22:40:13.000000000 -0400
+@@ -2014,7 +2014,11 @@
+ 	sigfillset(&signal_set);
+ 	pthread_sigmask(SIG_BLOCK, &signal_set, &old_set);
+ 
++#ifdef HAVE_WORKING_FORK
+ 	pid = fork();
++#else
++	pid = vfork();
++#endif
+ 
+ 	if (pid != 0) {
+ 		/* Fork failed or parent */
+--- asterisk-1.6.2.6-orig/main/asterisk.c	2009-08-10 15:30:55.000000000 -0400
++++ asterisk-1.6.2.6/main/asterisk.c	2009-10-21 22:39:34.000000000 -0400
+@@ -3500,8 +3500,12 @@
+ 
+ 		/* Don't let the canary child kill Asterisk, if it dies immediately */
+ 		signal(SIGPIPE, SIG_IGN);
+-
++#ifdef HAVE_WORKING_FORK
+ 		canary_pid = fork();
++#else
++		canary_pid = vfork();
++#endif
++
+ 		if (canary_pid == 0) {
+ 			char canary_binary[128], *lastslash;
+ 
+--- asterisk-1.6.2.6-orig/main/editline/TEST/test.c	2006-08-20 22:11:39.000000000 -0400
++++ asterisk-1.6.2.6/main/editline/TEST/test.c	2009-10-21 22:40:09.000000000 -0400
+@@ -237,7 +237,7 @@
+ 				break;
+ 			}
+ 		} else if (el_parse(el, ac, av) == -1) {
+-			switch (fork()) {
++			switch (vfork()) {
+ 			case 0:
+ 				execvp(av[0], (char *const *)av);
+ 				perror(av[0]);
+
+
+--- asterisk-1.6.2.6-orig/main/config.c	2010-01-18 15:01:50.000000000 -0500
++++ asterisk-1.6.2.6/main/config.c	2010-03-19 17:45:46.677015540 -0400
+@@ -1221,7 +1221,7 @@
+ 		int glob_ret;
+ 		glob_t globbuf;
+ 		globbuf.gl_offs = 0;	/* initialize it to silence gcc */
+-		glob_ret = glob(fn, MY_GLOB_FLAGS, NULL, &globbuf);
++		glob_ret = glob(fn, GLOB_NOCHECK, NULL, &globbuf);
+ 		if (glob_ret == GLOB_NOSPACE)
+ 			ast_log(LOG_WARNING,
+ 				"Glob Expansion of pattern '%s' failed: Not enough memory\n", fn);
+@@ -1278,7 +1278,7 @@
+ #ifdef AST_INCLUDE_GLOB
+ 				int glob_return;
+ 				glob_t glob_buf = { .gl_offs = 0 };
+-				glob_return = glob(cfinclude->include, MY_GLOB_FLAGS, NULL, &glob_buf);
++				glob_return = glob(cfinclude->include, GLOB_NOCHECK, NULL, &glob_buf);
+ 				/* On error, we reparse */
+ 				if (glob_return == GLOB_NOSPACE || glob_return  == GLOB_ABORTED)
+ 					unchanged = 0;
