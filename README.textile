@@ -1,6 +1,15 @@
-h1. Blackfin Asterisk Package System (BAPs)
+h1. Blackfin Asterisk Package System (BAPs) modified for Wideband
 
 h2(#intro). Introduction
+
+This work is concentrating on porting the Zaptel drivers to DAHDI (complete)
+Writing a driver for Si3216 (complete)
+Update  wcfxs driver to handle wideband (complete)
+Uodated dahdi base drivers to handle SLIN and SLIN 16 (in progress)
+Updated Asterisk dahdi channel interface to always switch to SLIN and SLIN16 9in progress)
+
+
+    
 
 Package-based Build System for Blackfin Asterisk. Key differences compared to buildroot based systems like Astfin and uCasterisk:
 
