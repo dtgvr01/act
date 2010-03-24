@@ -7,7 +7,7 @@ This work is concentrating on
 <li>Writing a driver for Si3216 (complete)</li>
 <li>Update  wcfxs driver to handle wideband (complete)</li>
 <li>Updated dahdi base drivers to handle SLIN and SLIN 16 (in progress)</li>
-<li>Updated Asterisk dahdi channel interface to always switch to SLIN and SLIN16 9in progress)</li>
+<li>Updated Asterisk dahdi channel interface to always switch to SLIN and SLIN16 (in progress)</li>
 
 
     
