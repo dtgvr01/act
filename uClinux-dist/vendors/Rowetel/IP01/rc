@@ -1,0 +1,28 @@
+hostname ip01
+mount -t proc proc /proc
+[ ! -d /var/tmp ] && mkdir /var/tmp
+mount -t ramfs ramfs /var/tmp
+mount -t sysfs sysfs /sys
+mount -t devpts devpts /dev/pts
+[ -d /proc/bus/usb ] && mount -t usbfs usbfs /proc/bus/usb
+[ -d /sys/kernel/debug ] && mount -t debugfs debugfs /sys/kernel/debug
+[ -d /proc/sys/fs/binfmt_misc ] && mount -t binfmt_misc binfmt_misc /proc/sys/fs/binfmt_misc
+[ -d /sys/kernel/security ] && mount -t securityfs securityfs /sys/kernel/security
+grep -qs nfsd /proc/filesystems && mount -t nfsd nfsd /proc/fs/nfsd
+if [ -e /bin/mdev ] ; then
+	echo /bin/mdev 2>/dev/null > /proc/sys/kernel/hotplug
+	/bin/mdev -s 2> /dev/null
+fi
+[ ! -d /var/log ] && mkdir /var/log
+[ ! -d /var/run ] && mkdir /var/run 
+[ ! -d /var/lock ] && mkdir /var/lock
+ifconfig lo 127.0.0.1
+inetd &
+
+# start up services
+
+for i in /etc/rc.d/S*; do
+        $i start
+done
+
+cat /etc/motd
