@@ -11,6 +11,8 @@ ASTERISK_DIR=$(BUILD_DIR)/$(ASTERISK_NAME)
 ASTERISK_SVN=http://svn.digium.com/svn/asterisk/
 ASTERISK_SOURCE=$(ASTERISK_NAME).tar.gz
 ASTERISK_UNZIP=zcat
+LIBTIFF_INC:=$(TOPDIR)/tiff-3.8.2/libtiff
+SPANDSP_INC:=$(TOPDIR)/spandsp-0.0.6/src
 TARGET_DIR=$(TOPDIR)/tmp/asterisk-$(ASTERISK_VERSION)/ipkg/asterisk
 DEBUG_DIR = /home/dan/debug
 
@@ -22,11 +24,11 @@ PKG_BUILD_DIR:=$(TOPDIR)/tmp/asterisk-$(ASTERISK_VERSION)
 STAGING_INC=$(STAGING_DIR)/usr/include
 STAGING_LIB=$(STAGING_DIR)/usr/lib
 ASTERISK_CFLAGS=-g -mfdpic -mfast-fp -ffast-math -D__FIXED_PT__ \
--D__BLACKFIN__ -I$(STAGING_INC) -fno-jump-tables 
-ASTERISK_LDFLAGS=-mfdpic -g -L$(STAGING_LIB) -lpthread -ldl 
+-D__BLACKFIN__ -I$(STAGING_INC) -I$(LIBTIFF_INC) -I$(SPANDSP_INC) -fno-jump-tables 
+ASTERISK_LDFLAGS=-mfdpic -g -L$(STAGING_LIB) -lpthread -lspandsp -ltiff -ldl
 ASTERISK_CONFIGURE_OPTS=--host=bfin-linux-uclibc --disable-largefile \
 --without-pwlib --without-curl --disable-xmldoc --with-dahdi --with-tonezone CFLAGS="$(ASTERISK_CFLAGS)" \
-LDFLAGS="$(ASTERISK_LDFLAGS)"
+LDFLAGS="$(ASTERISK_LDFLAGS)" SPANDSP_DIR=$(STAGING_INC)/usr/include/spandsp
 
 svn-update:
 	#svn update $(ASTERISK_SVN)/$(ASTERISK_VERSION) $(ASTERISK_DIR)
