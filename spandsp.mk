@@ -12,11 +12,11 @@
 include rules.mk
 
 SPANDSP_SITE=http://www.soft-switch.org/downloads/spandsp/
-SPANDSP_VERSION=0.0.4
-SPANDSP_SOURCE=spandsp-0.0.4pre18.tgz
+SPANDSP_VERSION=0.0.6
+SPANDSP_SOURCE=spandsp-0.0.6pre17.tgz
 TIFF_VERSION=3.8.2
 SPANDSP_DIR=$(BUILD_DIR)/spandsp-$(SPANDSP_VERSION)
-SPANDSP_CONFIGURE_OPTS=--host=bfin-linux-uclibc --enable-fixed-point
+SPANDSP_CONFIGURE_OPTS=--host=bfin-linux-uclibc --enable-fixed-point --disable-itutests
 
 TARGET_DIR=$(BUILD_DIR)/tmp/spandsp/ipkg/spandsp
 PKG_NAME:=spandsp
@@ -49,7 +49,7 @@ spandsp: $(SPANDSP_DIR)/.configured
 	make LDFLAGS=$(TIFF_LDFLAGS) CFLAGS=$(TIFF_CFLAGS) STAGEDIR=$(STAGING_DIR) -C $(SPANDSP_DIR)/
 	#copy header files to staging directory
 	mkdir -p $(STAGING_DIR)/usr/include/spandsp
-	cp -f $(SPANDSP_DIR)/src/spandsp/* $(STAGING_DIR)/usr/include/spandsp
+	cp -r -f $(SPANDSP_DIR)/src/spandsp/* $(STAGING_DIR)/usr/include/spandsp
 	cp -f $(SPANDSP_DIR)/src/.libs/libspandsp* $(STAGING_DIR)/usr/lib/
 
 	# setup directories for package
