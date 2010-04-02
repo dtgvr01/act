@@ -1,0 +1,229 @@
+t30.lo t30.o: t30.c config.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdlib.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/features.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_config.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_arch_features.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/cdefs.h \
+  /opt/uClinux/bfin-linux-uclibc/lib/gcc/bfin-linux-uclibc/4.1.2/include/stddef.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/types.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/types.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/wordsize.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/kernel_types.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/typesizes.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/pthreadtypes.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sched.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/time.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/endian.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/endian.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/select.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/select.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sigset.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/time.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/sysmacros.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/alloca.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdio.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_stdio.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_mutex.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/pthread.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sched.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_clk_tck.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/signal.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/initspin.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sigthread.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_pthread.h \
+  /opt/uClinux/bfin-linux-uclibc/lib/gcc/bfin-linux-uclibc/4.1.2/include/stdarg.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/stdio_lim.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/inttypes.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdint.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/string.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/fcntl.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/fcntl.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/tgmath.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/math.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/huge_val.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/huge_valf.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/huge_vall.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/inf.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/nan.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/mathdef.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/mathcalls.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/complex.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/cmathcalls.h \
+  floating_fudge.h /home/dan/dev/tiff-3.8.2/libtiff/tiffio.h \
+  /home/dan/dev/tiff-3.8.2/libtiff/tiff.h \
+  /home/dan/dev/tiff-3.8.2/libtiff/tiffconf.h \
+  /home/dan/dev/tiff-3.8.2/libtiff/tiffvers.h spandsp/telephony.h \
+  spandsp/logging.h spandsp/bit_operations.h spandsp/queue.h \
+  spandsp/power_meter.h spandsp/complex.h spandsp/tone_generate.h \
+  spandsp/async.h spandsp/hdlc.h spandsp/fsk.h spandsp/v29rx.h \
+  spandsp/v29tx.h spandsp/v27ter_rx.h spandsp/v27ter_tx.h spandsp/t4_rx.h \
+  spandsp/t4_tx.h spandsp/t30_fcf.h spandsp/t35.h spandsp/t30.h \
+  spandsp/t30_api.h spandsp/t30_logging.h spandsp/private/logging.h \
+  spandsp/private/t4_rx.h spandsp/private/t4_tx.h spandsp/private/t30.h \
+  spandsp/private/t30_dis_dtc_dcs_bits.h t30_local.h
+
+config.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdlib.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/features.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_config.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_arch_features.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/cdefs.h:
+
+/opt/uClinux/bfin-linux-uclibc/lib/gcc/bfin-linux-uclibc/4.1.2/include/stddef.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/types.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/types.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/wordsize.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/kernel_types.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/typesizes.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/pthreadtypes.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sched.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/time.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/endian.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/endian.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/select.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/select.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sigset.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/time.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/sysmacros.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/alloca.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdio.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_stdio.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_mutex.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/pthread.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sched.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_clk_tck.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/signal.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/initspin.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sigthread.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_pthread.h:
+
+/opt/uClinux/bfin-linux-uclibc/lib/gcc/bfin-linux-uclibc/4.1.2/include/stdarg.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/stdio_lim.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/inttypes.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdint.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/string.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/fcntl.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/fcntl.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/tgmath.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/math.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/huge_val.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/huge_valf.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/huge_vall.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/inf.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/nan.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/mathdef.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/mathcalls.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/complex.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/cmathcalls.h:
+
+floating_fudge.h:
+
+/home/dan/dev/tiff-3.8.2/libtiff/tiffio.h:
+
+/home/dan/dev/tiff-3.8.2/libtiff/tiff.h:
+
+/home/dan/dev/tiff-3.8.2/libtiff/tiffconf.h:
+
+/home/dan/dev/tiff-3.8.2/libtiff/tiffvers.h:
+
+spandsp/telephony.h:
+
+spandsp/logging.h:
+
+spandsp/bit_operations.h:
+
+spandsp/queue.h:
+
+spandsp/power_meter.h:
+
+spandsp/complex.h:
+
+spandsp/tone_generate.h:
+
+spandsp/async.h:
+
+spandsp/hdlc.h:
+
+spandsp/fsk.h:
+
+spandsp/v29rx.h:
+
+spandsp/v29tx.h:
+
+spandsp/v27ter_rx.h:
+
+spandsp/v27ter_tx.h:
+
+spandsp/t4_rx.h:
+
+spandsp/t4_tx.h:
+
+spandsp/t30_fcf.h:
+
+spandsp/t35.h:
+
+spandsp/t30.h:
+
+spandsp/t30_api.h:
+
+spandsp/t30_logging.h:
+
+spandsp/private/logging.h:
+
+spandsp/private/t4_rx.h:
+
+spandsp/private/t4_tx.h:
+
+spandsp/private/t30.h:
+
+spandsp/private/t30_dis_dtc_dcs_bits.h:
+
+t30_local.h:

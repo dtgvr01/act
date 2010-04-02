@@ -1,0 +1,24 @@
+testcpuid.lo testcpuid.o: testcpuid.c config.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/inttypes.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/features.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_config.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_arch_features.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/cdefs.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdint.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/wordsize.h
+
+config.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/inttypes.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/features.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_config.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_arch_features.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/cdefs.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdint.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/wordsize.h:

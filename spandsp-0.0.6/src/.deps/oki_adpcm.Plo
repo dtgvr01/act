@@ -1,0 +1,85 @@
+oki_adpcm.lo oki_adpcm.o: oki_adpcm.c config.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdlib.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/features.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_config.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_arch_features.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/cdefs.h \
+  /opt/uClinux/bfin-linux-uclibc/lib/gcc/bfin-linux-uclibc/4.1.2/include/stddef.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/types.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/types.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/wordsize.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/kernel_types.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/typesizes.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/pthreadtypes.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sched.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/time.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/endian.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/endian.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/select.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/select.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sigset.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/time.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/sysmacros.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/alloca.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/inttypes.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdint.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/string.h \
+  spandsp/telephony.h spandsp/oki_adpcm.h spandsp/private/oki_adpcm.h
+
+config.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdlib.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/features.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_config.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_arch_features.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/cdefs.h:
+
+/opt/uClinux/bfin-linux-uclibc/lib/gcc/bfin-linux-uclibc/4.1.2/include/stddef.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/types.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/types.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/wordsize.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/kernel_types.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/typesizes.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/pthreadtypes.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sched.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/time.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/endian.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/endian.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/select.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/select.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sigset.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/time.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/sysmacros.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/alloca.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/inttypes.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdint.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/string.h:
+
+spandsp/telephony.h:
+
+spandsp/oki_adpcm.h:
+
+spandsp/private/oki_adpcm.h:

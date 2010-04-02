@@ -1,0 +1,1 @@
+cmd_drivers/dahdi/xpp/xpp.o := bfin-uclinux-ld   -r -o drivers/dahdi/xpp/xpp.o drivers/dahdi/xpp/xbus-core.o drivers/dahdi/xpp/xbus-sysfs.o drivers/dahdi/xpp/xbus-pcm.o drivers/dahdi/xpp/xframe_queue.o drivers/dahdi/xpp/xpp_dahdi.o drivers/dahdi/xpp/xproto.o drivers/dahdi/xpp/card_global.o drivers/dahdi/xpp/dahdi_debug.o

@@ -1,0 +1,137 @@
+gsm0610_encode.lo gsm0610_encode.o: gsm0610_encode.c config.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/assert.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/features.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_config.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_arch_features.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/cdefs.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/inttypes.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdint.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/wordsize.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/tgmath.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/math.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/huge_val.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/huge_valf.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/huge_vall.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/inf.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/nan.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/mathdef.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/mathcalls.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/complex.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/cmathcalls.h \
+  floating_fudge.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdlib.h \
+  /opt/uClinux/bfin-linux-uclibc/lib/gcc/bfin-linux-uclibc/4.1.2/include/stddef.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/types.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/types.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/kernel_types.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/typesizes.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/pthreadtypes.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sched.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/time.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/endian.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/endian.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/select.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/select.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sigset.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/time.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/sysmacros.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/alloca.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/memory.h \
+  /opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/string.h \
+  spandsp/telephony.h spandsp/fast_convert.h spandsp/bitstream.h \
+  spandsp/saturated.h spandsp/gsm0610.h gsm0610_local.h \
+  spandsp/private/gsm0610.h
+
+config.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/assert.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/features.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_config.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/uClibc_arch_features.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/cdefs.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/inttypes.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdint.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/wordsize.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/tgmath.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/math.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/huge_val.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/huge_valf.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/huge_vall.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/inf.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/nan.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/mathdef.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/mathcalls.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/complex.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/cmathcalls.h:
+
+floating_fudge.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/stdlib.h:
+
+/opt/uClinux/bfin-linux-uclibc/lib/gcc/bfin-linux-uclibc/4.1.2/include/stddef.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/types.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/types.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/kernel_types.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/typesizes.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/pthreadtypes.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sched.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/time.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/endian.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/endian.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/select.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/select.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/sigset.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/bits/time.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/sys/sysmacros.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/alloca.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/memory.h:
+
+/opt/uClinux/bfin-linux-uclibc/bfin-linux-uclibc/runtime/usr/include/string.h:
+
+spandsp/telephony.h:
+
+spandsp/fast_convert.h:
+
+spandsp/bitstream.h:
+
+spandsp/saturated.h:
+
+spandsp/gsm0610.h:
+
+gsm0610_local.h:
+
+spandsp/private/gsm0610.h:
