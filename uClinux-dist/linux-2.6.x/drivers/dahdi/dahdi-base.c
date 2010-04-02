@@ -196,6 +196,11 @@ static int debug = 1;
 static int linearmodeflag = 0;
 static int process_counter;
 static int write_counter;
+union	u_lindata
+{
+	unsigned short	lin[128];
+	unsigned char	xlaw[256];
+};
 struct timeval t;
 /*!
  * \brief states for transmit signalling
@@ -2009,42 +2014,37 @@ static ssize_t dahdi_chan_read(struct file *file, char *usrbuf, size_t count, in
 	}
 #endif
 /* end addition */
+
 	if (chan->flags & DAHDI_FLAG_LINEAR) {
 
-		if (amnt > chan->readn[res] << 1)
-			amnt = chan->readn[res] << 1;
-//		if (amnt) {
-//			u8 lindata[128];
-//			int left = amnt; /* amnt is in bytes */
-//			int pos = 0;
-//			int pass;
-//			while (left) {
-//				pass = left;
-//				if (pass > 128)
-//					pass = 128;
-//				for (x = 0; x < pass; x++)
-//					lindata[x] = chan->readbuf[res][x + pos];
-//				if (copy_to_user(usrbuf + pos , lindata, pass))
-//					return -EFAULT;
-//				left -= pass;
-//				pos += pass;
-//			}
-//		}
-		if (amnt > chan->readn[res] << 1)
-					amnt = chan->readn[res] << 1;
-				if (amnt) {
-					if (copy_to_user(usrbuf, chan->readbuf[res], amnt))
-						return -EFAULT;
-				}
-//				if ((!(write_counter % 500)))
-//				{
-//					do_gettimeofday(&t);
-//					printk("chan_read/out(Seconds: %lu, unit: %d, res: %d, owbuf: %d amnt: %d, dahdi_chunk_size  %d, buffer_cntr: %d)\n",
-//							t.tv_sec, unit, res, chan->readbuf, amnt, variable_dahdi_chunk_size,  write_counter);
-//					printk("\t("); for (x = 0; x < amnt; x++) printk(" %02x", (unsigned char)usrbuf[x]);
-//					printk(")\n");
-//				}
-	} else {
+		if (amnt > chan->readn[res])
+			amnt = chan->readn[res];
+		if (amnt)
+		{
+					/* There seems to be a max stack size, so we have
+					   to do this in smaller pieces */
+					u8 lindata[256];
+					int left = amnt; /* amnt is in bytes */
+					int pos = 0;
+					int pass;
+					while (left)
+					{
+						pass = left;
+						if (pass > 256)
+							pass = 256;
+						for (x = 0; x < pass; x++)
+						{
+							lindata[x] = chan->readbuf[res][x + pos];
+
+						}
+						if (copy_to_user(usrbuf + pos, lindata, pass))
+							return -EFAULT;
+						left -= pass;
+						pos += pass;
+					}
+			}
+		}
+		else {
 		if (amnt > chan->readn[res])
 			amnt = chan->readn[res];
 		if (amnt) {
@@ -2094,7 +2094,9 @@ static int num_filled_bufs(struct dahdi_chan *chan)
 
 	return range1 + range2;
 }
-static int aa_cnt,glb_cnt;
+
+static int aa_cnt,glb_cnt,crap_bytes;
+
 static ssize_t dahdi_chan_write(struct file *file, const char *usrbuf, size_t count, int unit)
 {
 	unsigned long flags;
@@ -2165,61 +2167,47 @@ static ssize_t dahdi_chan_write(struct file *file, const char *usrbuf, size_t co
  	}
 #endif
 
-	if (amnt) {
-		if (chan->flags & DAHDI_FLAG_LINEAR) {
-			/* There seems to be a max stack size, so we have
-			   to do this in smaller pieces */
-
-//			u8 lindata[128];
-//			int left = amnt; /* amnt is in bytes */
-//			int pos = 0;
-//			int pass;
-//			while (left) {
-//				pass = left;
-//				if (pass > 128)
-//					pass = 128;
-//				if (copy_from_user(lindata, usrbuf + pos, pass)) {
-//					return -EFAULT;
-//				}
-//				left -= pass;
-//				for (x = 0; x < pass; x++)
-//					chan->writebuf[res][x + pos] = lindata[x];
-//				pos += pass;
-//			}
-//			chan->writen[res] = amnt;
-			if (copy_from_user(chan->writebuf[res], usrbuf, amnt)) {
-				return -EFAULT;
-			}
-			chan->writen[res] = amnt;
-
-//			for (x = 0; x < amnt; x++){
-//				glb_cnt++;
-//				if ((unsigned char)usrbuf[x] == 0xAA)
-//				{
-//					aa_cnt++;
-//				}
-//				if((unsigned char)usrbuf[x] == 0x55){
-//					do_gettimeofday(&t);
-//					printk("chan_write/in:%lu %lu %lu %lu\n",t.tv_sec,t.tv_usec,glb_cnt,aa_cnt);
-//					aa_cnt=glb_cnt= 0;
-//				}
-//			}
-//			if ((!(write_counter % 500)))
-//			{
-//				do_gettimeofday(&t);
-//				printk("chan_write/in(Seconds: %lu, unit: %d, res: %d, owbuf: %d amnt: %d, txdis: %d, buffer_cntr: %d)\n",
-//						t.tv_sec, unit, res, chan->outwritebuf, amnt, chan->txdisable, write_counter);
-//				printk("\t("); for (x = 0; x < amnt; x++) printk(" %02x", (unsigned char)usrbuf[x]);
-//				printk(")\n");
-//			}
-//			write_counter++;
-
-		} else {
+ 	if (amnt) {
+ 			if (chan->flags & DAHDI_FLAG_LINEAR) {
+ 				/* There seems to be a max stack size, so we have
+ 				   to do this in smaller pieces */
+ 				u8 lindata[256];
+ 				int left = amnt; /* amnt is in bytes */
+ 				int pos = 0;
+ 				int pass;
+ 				while (left) {
+ 					pass = left;
+ 					if (pass > 256)
+ 						pass = 256;
+ 					if (copy_from_user(lindata, (usrbuf + pos), pass)) {
+ 						return -EFAULT;
+ 					}
+ 					left -= pass;
+ 					for (x = 0; x < pass; x++)
+ 					{
+ 						chan->writebuf[res][x + pos] = lindata[x];
+ 					}
+ 					pos += pass;
+ 				}
+ 				chan->writen[res] = amnt;
+ 			}
+ 			else {
 			if (copy_from_user(chan->writebuf[res], usrbuf, amnt)) {
 				return -EFAULT;
 			}
 			chan->writen[res] = amnt;
 		}
+#if 0
+		if ((!(write_counter % 1000)))
+		{
+			do_gettimeofday(&t);
+			printk("chan_write/in(Seconds: %lu, unit: %d, res: %d, owbuf: %d amnt: %d, txdis: %d, buffer_cntr: %d)\n",
+					t.tv_sec, unit, res, chan->outwritebuf, amnt, chan->txdisable, write_counter);
+			printk("\t("); for (x = 0; x < amnt; x++) printk(" %02x", (unsigned char)usrbuf[x]);
+			printk(")\n");
+		}
+ 		write_counter++;
+#endif
 		chan->writeidx[res] = 0;
 		if (chan->flags & DAHDI_FLAG_FCS)
 			calc_fcs(chan, res);
@@ -4861,15 +4849,15 @@ static int dahdi_chanandpseudo_ioctl(struct inode *inode, struct file *file, uns
 			break;
 		case 1:
 			chan->flags |= DAHDI_FLAG_LINEAR;
-			variable_dahdi_chunk_size = DAHDI_CHUNKSIZE;
+			variable_dahdi_chunk_size = DAHDI_CHUNKSIZE_MEDIUM;
 			linearmodeflag  = 1;
 			module_printk(KERN_ERR, "dahdi_base.c: Channel set to linear mode: 0x%x\n",chan->flags);
 			break;
 		case 2:
 			chan->flags |= DAHDI_FLAG_LINEAR;
-			variable_dahdi_chunk_size = DAHDI_CHUNKSIZE;
+			variable_dahdi_chunk_size = DAHDI_CHUNKSIZE_HIGH;
 			linearmodeflag  = 2;
-			module_printk(KERN_ERR, "dahdi_base.c: Channel set to linear mode: 0x%x\n",chan->flags);
+			module_printk(KERN_ERR, "dahdi_base.c: Channel set to linear 16 mode: 0x%x\n",chan->flags);
 			break;
 		}
 		break;
@@ -5876,7 +5864,7 @@ static inline void __dahdi_process_getaudio_chunk(struct dahdi_chan *ss, unsigne
 	/* Called with ss->lock held */
 	struct dahdi_chan *ms = ss->master;
 	/* Linear representation */
-	short getlin[DAHDI_CHUNKSIZE_LOW], k[DAHDI_CHUNKSIZE_LOW];
+	short getlin[DAHDI_CHUNKSIZE_HIGH], k[DAHDI_CHUNKSIZE_HIGH];
 	int x;
 	process_counter++;
 
@@ -6345,6 +6333,7 @@ static inline void __dahdi_getbuf_chunk(struct dahdi_chan *ss, unsigned char *tx
 				} else {
 					if (ms->outwritebuf == ms->inwritebuf) {
 						ms->outwritebuf = oldbuf;
+
 						if (ms->iomask & (DAHDI_IOMUX_WRITE | DAHDI_IOMUX_WRITEEMPTY))
 							wake_up_interruptible(&ms->eventbufq);
 						/* If we're only supposed to start when full, disable the transmitter */
@@ -6415,10 +6404,12 @@ out in the later versions, and is put back now. */
 				}
 			}
 		} else if (ms->flags & DAHDI_FLAG_LOOPED) {
+
 			for (x = 0; x < bytes; x++)
 				txb[x] = ms->readchunk[x];
 			bytes = 0;
 		} else if (ms->flags & DAHDI_FLAG_HDLC) {
+
 			for (x=0;x<bytes;x++) {
 				/* Okay, if we're HDLC, then transmit a flag by default */
 				if (fasthdlc_tx_need_data(&ms->txhdlc))
@@ -7099,7 +7090,7 @@ static inline void __dahdi_process_putaudio_chunk(struct dahdi_chan *ss, unsigne
 	/* Called with ss->lock held */
 	struct dahdi_chan *ms = ss->master;
 	/* Linear version of received data */
-	short putlin[DAHDI_CHUNKSIZE_LOW],k[DAHDI_CHUNKSIZE_LOW];
+	short putlin[DAHDI_CHUNKSIZE_HIGH],k[DAHDI_CHUNKSIZE_HIGH];
 	int x,r;
 
 	if (ms->dialing) ms->afterdialingtimer = 50;

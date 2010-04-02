@@ -394,7 +394,7 @@ static inline int dahdi_wait_event(int fd)
 }
 
 /*! Chunk size to read -- we use 20ms chunks to make things happy. */
-#define READ_SIZE 160
+#define READ_SIZE 640
 
 #define MASK_AVAIL		(1 << 0)	/*!< Channel available for PRI use */
 #define MASK_INUSE		(1 << 1)	/*!< Channel currently in use */
@@ -6969,10 +6969,10 @@ static struct ast_frame *dahdi_read(struct ast_channel *ast)
 		read_size_lcl = READ_SIZE;
 		break;
 	case 1:
-		read_size_lcl = READ_SIZE * 2;
+		read_size_lcl = READ_SIZE;
 		break;
 	case 2:
-		read_size_lcl = READ_SIZE * 4;
+		read_size_lcl = READ_SIZE ;
 		break;
 	default:
 		ast_log(LOG_WARNING, "Invalid linear mode %s\n", p->subs[idx].linear);
@@ -7162,10 +7162,10 @@ static int my_dahdi_write(struct dahdi_pvt *p, unsigned char *buf, int len, int 
 		read_size_lcl = READ_SIZE;
 		break;
 	case 1:
-		read_size_lcl = READ_SIZE * 2;
+		read_size_lcl = READ_SIZE;
 		break;
 	case 2:
-		read_size_lcl = READ_SIZE * 4;
+		read_size_lcl = READ_SIZE ;
 		break;
 	default:
 		ast_log(LOG_WARNING, "Invalid linear mode %s\n", p->subs[idx].linear);

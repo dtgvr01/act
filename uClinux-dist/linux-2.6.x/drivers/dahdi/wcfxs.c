@@ -522,8 +522,9 @@ int logdma3[20];
 int ilogdma = 0;
 int serialnum = 0;
 int notzero=0;
-static int dahdi_bytes_received;
-static int dahdi_bytes_received_aa;
+static int dahdi_bytes_received = 0;
+static int dahdi_bytes_received_aa = 0;
+static int bad_bytes = 0;
 static inline void wcfxs_transmitprep(struct wcfxs *wc, u8 *writechunk)
 {
 	int x;
@@ -556,15 +557,21 @@ static inline void wcfxs_transmitprep(struct wcfxs *wc, u8 *writechunk)
 				if  ((wc->chans[0]->flags &  DAHDI_FLAG_LINEAR))
 				{
 					writechunk[x] = wc->chans[0]->writechunk[x];
+#if 0
 					dahdi_bytes_received++;
-				if (writechunk[x] == 0xAA){
-					dahdi_bytes_received_aa++;
-									}
-					if (writechunk[x] == 0x55){
-						do_gettimeofday(&t);
-						printk("0x55 MArker: %lu %lu %lu %lu\n",t.tv_sec,t.tv_usec,dahdi_bytes_received, dahdi_bytes_received_aa);
-						dahdi_bytes_received = dahdi_bytes_received_aa = 0;
+					if ((writechunk[x] == 0xAA)){
+						dahdi_bytes_received_aa++;
 					}
+					else if (writechunk[x] == 0x55){
+						do_gettimeofday(&t);
+						printk("0x55 Marker: %lu %lu %lu %lu %lu\n",t.tv_sec,t.tv_usec,dahdi_bytes_received, dahdi_bytes_received_aa, bad_bytes);
+						dahdi_bytes_received = dahdi_bytes_received_aa = bad_bytes = 0;
+					}
+					else
+					{
+						bad_bytes++;
+					}
+#endif
 				}
 				else
 				{
@@ -639,7 +646,7 @@ static inline void wcfxs_transmitprep(struct wcfxs *wc, u8 *writechunk)
 #endif
 		}
 	}
-	if ((!(wc->intcount % 10000)) && (debug >3) && (wc->chans[0]->flags &  DAHDI_FLAG_LINEAR))
+	if ((!(wc->intcount % 10000)) && (debug >3))
 	{
 
 		switch (widebandmode)
@@ -771,7 +778,7 @@ static inline void wcfxs_receiveprep(struct wcfxs *wc, u8 *readchunk)
 			dahdi_ec_chunk(wc->chans[x], wc->chans[x]->readchunk, wc->chans[x]->writechunk);
 	}
 
-	if ((!(wc->intcount % 10000)) && (debug >3)  && (wc->chans[0]->flags &  DAHDI_FLAG_LINEAR))
+	if ((!(wc->intcount % 10000)) && (debug >3))
 		{
 
 			switch (widebandmode)
@@ -1283,7 +1290,7 @@ void regular_interrupt_processing(u8 *read_samples, u8 *write_samples) {
 
 
 /* handle speech samples */
-	if ((!(wc->intcount % 10000)) && (debug >3)  && (wc->chans[0]->flags &  DAHDI_FLAG_LINEAR))
+	if ((!(wc->intcount % 10000)) && (debug >3))
 	{
 		printk("wcfxs_transmitprep:10s Marker.\n");
 		do_gettimeofday(&t);
